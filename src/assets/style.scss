@@ -1,0 +1,85 @@
+@import '../../node_modules/bootstrap/scss/functions';
+@import '../../node_modules/bootstrap/scss/variables';
+
+$primary : #146C94;
+$cyan: #18A7CE;
+$info: #AFD3E2;
+
+$theme-colors: map-merge($theme-colors , (
+    'primary': $primary,
+    'cyan': $cyan,
+    'info': $info,
+));
+
+@import 'bootstrap/scss/bootstrap.scss';
+$bootstrap-icons-font-dir: "bootstrap-icons/font/fonts";
+@import "bootstrap-icons/font/bootstrap-icons.scss";
+
+#app {
+    background-color: $light;
+    main {
+        max-width: 400px;
+        h1.display-3 {
+            margin-top: 0px;
+        }
+        section.clockComp {
+            .clock {
+                width: 300px;
+                height: 300px;
+                border-radius: 50%;
+                border: 3px dashed $primary;
+                h3 {
+                    color: $gray-600;
+                    &.active {
+                        color: $primary !important;
+                    }
+                }
+            }
+        }
+        section.funcComp {
+            button {
+                width: 64px;
+                height: 64px;
+                border-radius: 50%;
+                border: none;
+                &:hover {
+                    background-color: $cyan !important;
+                    i.bi {
+                        color: white !important;
+                    }
+                }
+                &.disabled {
+                    background-color: $gray-600 !important;
+                    i.bi {
+                        color: white !important;
+                    }
+                }
+            }
+        }
+        section.setTime {
+            button.btn {
+                border: none;
+                &:hover {
+                    background-color: $primary !important;
+                }
+                &.disabled {
+                    background-color: $gray-600 !important;
+                    i.bi {
+                        color: white !important;
+                    }
+                }
+            }
+            input[type='time'] {
+                font-size: 40px;
+                color: $primary;
+                padding-left: 4rem !important;
+                &:hover {
+                    cursor: pointer;
+                }
+                &:focus {
+                    background-color: $gray-300 !important;
+                }
+            }
+        }
+    }
+}
