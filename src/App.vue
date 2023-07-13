@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watchEffect } from "vue";
+import { ref } from "vue";
 import Clock from "./Components/Clock.vue";
 import Function from "./Components/Function.vue";
 import SetTime from "./Components/SetTime.vue";
@@ -54,7 +54,7 @@ const setTime = data => {
   secs.value = time[2];
 }
 
-let timerFunc = (num) => {
+const timerFunc = (num) => {
   hours.value = Math.floor(num / 3600).toString();
   mins.value = Math.floor((num - ~~hours.value * 3600) / 60).toString();
   secs.value = Math.floor((num - ~~hours.value * 3600 - ~~mins.value * 60)).toString();
@@ -86,6 +86,7 @@ const startTimer = () => {
       if (times > 1) {
         times --;
         timerFunc(times);
+        console.log(times);
       } else {
         times --;
         timerFunc(times);

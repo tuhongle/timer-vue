@@ -24,6 +24,6 @@ const props = defineProps({
     secs: {
         type: String,
     },
-    start: String,
+    start: Boolean,
 });
 </script>
