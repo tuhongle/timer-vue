@@ -69,7 +69,8 @@ $bootstrap-icons-font-dir: "bootstrap-icons/font/fonts";
                     }
                 }
             }
-            input[type='time'] {
+
+            input {
                 font-size: 40px;
                 color: $primary;
                 padding-left: 4rem !important;

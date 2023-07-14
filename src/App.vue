@@ -2,7 +2,7 @@
   <main class="content-wrapper mx-auto py-5">
     <h1 class="display-3 fw-bold text-center text-primary mb-4">Timer App</h1>
     <section class="clockComp">
-      <Clock :hours="hours" :mins="mins" :secs="secs" :start="start"/>
+      <Clock :hours="hours" :mins="mins" :secs="secs" :start="start" @mute="muteSound" @unmute="unmuteSound"/>
     </section>
     <section class="funcComp mt-4">
       <Function @add10secs="add10secs" @startTimer="startTimer" @pauseTimer="pauseTimer" :start="start" />
@@ -19,11 +19,14 @@ import Clock from "./Components/Clock.vue";
 import Function from "./Components/Function.vue";
 import SetTime from "./Components/SetTime.vue";
 
+import oneSecond from './assets/onesecond.mp3';
+import timerEnding from './assets/timerending.mp3';
+
 const hours = ref('00');
 const mins = ref('00');
 const secs = ref('00');
-const start = ref(false);
-const paused = ref(false);
+
+let start = ref(false);
 
 /* const time = computed(() => {
   return ~~(hours.value) * 3600 + ~~(mins.value) * 60 + ~~(secs.value);
@@ -75,32 +78,59 @@ const add10secs = () => {
   timerFunc(times);
 };
 
+let timerInterval;
+let audioInterval;
+
+const audio = new Audio(oneSecond);
+const timer = new Audio(timerEnding);
+
 const startTimer = () => {
   if (hours.value !== '00' || mins.value !== '00' || secs.value !== '00') {
     start.value = true;
-    paused.value = false;
-  };
-  setInterval(() => {
-    if (!(paused.value)) {
+    timerInterval = setInterval(() => {
       let times = ~~hours.value * 3600 + ~~mins.value * 60 + ~~secs.value;
       if (times > 1) {
         times --;
         timerFunc(times);
-        console.log(times);
+        if (times === 1) {
+          clearInterval(audioInterval);
+        };
       } else {
         times --;
         timerFunc(times);
-        paused.value = true;
         start.value = false;
+        clearInterval(timerInterval);
+        timer.play();
+        if (timer.muted) {
+          setTimeout(() => {
+            alert('Time is up')
+          }, 200);
+        }
       }
-    }
-  }, 1000);
+    }, 1000);
+    setTimeout(() => {
+      audioInterval = setInterval(() => {
+        audio.play();
+      },0);
+    },300);
+  };
 };
 
 const pauseTimer = () => {
-  paused.value = true;
+  clearInterval(timerInterval);
+  clearInterval(audioInterval);
   start.value = false;
 };
+
+const muteSound = () => {
+  audio.muted = true;
+  timer.muted = true;
+};
+
+const unmuteSound = () => {
+  audio.muted = false;
+  timer.muted = false;
+}
 
 </script>
 
